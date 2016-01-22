@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Director list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for director in directors %}
+            <tr>
+                <td><a href="{{ path('director_show', { 'id': director.id }) }}">{{ director.id }}</a></td>
+                <td>{{ director.firstname }}</td>
+                <td>{{ director.lastname }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('director_show', { 'id': director.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('director_edit', { 'id': director.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('director_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,175 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Movies
+ *
+ * @ORM\Table(name="movies")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\MoviesRepository")
+ */
+class Movies
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Director", inversedBy="movies")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $director;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Actor", cascade={"persist"})
+     */
+    private $actors;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Genre", inversedBy="movies")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $genre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nationality", type="string", length=200)
+     */
+    private $nationality;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Movies
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+
+    /**
+     * Set nationality
+     *
+     * @param string $nationality
+     * @return Movies
+     */
+    public function setNationality($nationality)
+    {
+        $this->nationality = $nationality;
+
+        return $this;
+    }
+
+    /**
+     * Get nationality
+     *
+     * @return string 
+     */
+    public function getNationality()
+    {
+        return $this->nationality;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->actors = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add actors
+     *
+     * @param \AppBundle\Entity\Actor $actors
+     * @return Movies
+     */
+    public function addActor(\AppBundle\Entity\Actor $actors)
+    {
+        $this->actors[] = $actors;
+
+        return $this;
+    }
+
+    /**
+     * Remove actors
+     *
+     * @param \AppBundle\Entity\Actor $actors
+     */
+    public function removeActor(\AppBundle\Entity\Actor $actors)
+    {
+        $this->actors->removeElement($actors);
+    }
+
+    /**
+     * Get actors
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getActors()
+    {
+        return $this->actors;
+    }
+
+    /**
+     * Set director
+     *
+     * @param \AppBundle\Entity\Director $director
+     * @return Movies
+     */
+    public function setDirector(\AppBundle\Entity\Director $director)
+    {
+        $this->director = $director;
+
+        return $this;
+    }
+
+    /**
+     * Get director
+     *
+     * @return \AppBundle\Entity\Director 
+     */
+    public function getDirector()
+    {
+        return $this->director;
+    }
+}
